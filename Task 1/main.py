@@ -93,10 +93,7 @@ def start_udp():
     run_server()
 
 if __name__ == "__main__":
-    http_thread = threading.Thread(target=start_http)
-    udp_thread = threading.Thread(target=start_udp)
+    http_thread = threading.Thread(target=start_http, daemon=True)
+    udp_thread = threading.Thread(target=start_udp, daemon=True)
     http_thread.start()
     udp_thread.start()
-    http_thread.join()
-    udp_thread.join()
-
