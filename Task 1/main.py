@@ -15,14 +15,14 @@ class HttpHandler(BaseHTTPRequestHandler):
     def do_GET(self):
         parsed_url = urllib.parse.urlparse(self.path)
         if parsed_url.path == "/":
-            self.send_html_file("index.html")
+            self.send_html_file("front-init/index.html")
         elif parsed_url.path == "/message.html":
-            self.send_html_file("message.html")
+            self.send_html_file("front-init/message.html")
         else:
             if Path().joinpath(parsed_url.path[1:]).exists():
                 self.send_static()
             else:
-                self.send_html_file("error.html", 404)
+                self.send_html_file("front-init/error.html", 404)
 
     def send_html_file(self, filename, status = 200):
         self.send_response(status)
@@ -72,7 +72,7 @@ def run_server():
         sock.close()
 
 def save_data(data_dict):
-    storage_dir = Path("storage")
+    storage_dir = Path("front-init/storage")
     storage_dir.mkdir(exist_ok=True)
     file_path = storage_dir / "data.json"
     data = {}
