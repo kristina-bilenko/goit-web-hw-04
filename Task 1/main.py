@@ -19,7 +19,7 @@ class HttpHandler(BaseHTTPRequestHandler):
         elif parsed_url.path == "/message.html":
             self.send_html_file("front-init/message.html")
         else:
-            if Path().joinpath(parsed_url.path[1:]).exists():
+            if Path("front-init").joinpath(parsed_url.path[1:]).exists():
                 self.send_static()
             else:
                 self.send_html_file("front-init/error.html", 404)
@@ -39,7 +39,7 @@ class HttpHandler(BaseHTTPRequestHandler):
         else:
             self.send_header("Content-type", "text/plain")
         self.end_headers()
-        with open(Path(self.path[1:]), "rb") as file:
+        with open(Path("front-init") / self.path[1:], "rb") as file:
             self.wfile.write(file.read())
 
     def do_POST(self):
